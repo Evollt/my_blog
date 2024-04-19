@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UserRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -80,6 +81,23 @@ class UserController extends Controller
         return response()->json([
             'status' => true,
             'message' => 'Информация о пользователе',
+            'data' => $user
+        ], 200);
+    }
+
+    public function update(UserRequest $request)
+    {
+        $user = Auth::user();
+
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->description = $request->description;
+
+        $user->save();
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Данные о пользователе обновлены',
             'data' => $user
         ], 200);
     }

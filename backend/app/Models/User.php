@@ -35,6 +35,8 @@ use Laravel\Sanctum\HasApiTokens;
  * @method static \Illuminate\Database\Eloquent\Builder|User wherePassword($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereRememberToken($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereUpdatedAt($value)
+ * @property string|null $description
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereDescription($value)
  * @mixin \Eloquent
  */
 class User extends Authenticatable
@@ -50,6 +52,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'description'
     ];
 
     /**

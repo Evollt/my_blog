@@ -28,6 +28,7 @@ docker-compose run artisan db:seed
 После запуска сервера `PhpMyAdmin` автоматически запустится по адресу `http://localhost:8080/`
 ### Логин: `root`
 ### Пароль: `root`
-
+### Пароль для всех пользователей, созданных через фабрики: `qwerty12`
+### Документация к API в [Postman](https://www.postman.com/bold-meadow-755953/workspace/my-blog/collection/18045515-6e2a4fd0-3764-40f6-ac3b-b0e02504ee95?action=share&creator=18045515)
 
 

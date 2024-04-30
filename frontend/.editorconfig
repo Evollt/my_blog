@@ -1,0 +1,2 @@
+[*.{js,ts,css,html,json,vue,scss}]
+indent_size = 2

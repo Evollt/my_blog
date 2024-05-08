@@ -27,11 +27,12 @@ let options = {
     <div class="article-item__user text-gray-500">
       Автор: {{ article.user.name }}
     </div>
-    <div
+    <RouterLink
+      :to="`/articles/${article.id}`"
       class="article-item__btns text-gray-500 hover:underline cursor-pointer"
     >
       Читать пост →
-    </div>
+    </RouterLink>
   </div>
 </template>
 

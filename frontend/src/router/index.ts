@@ -3,6 +3,7 @@ import ProfilePage from '@/pages/ProfilePage.vue';
 import ArticlesPage from '@/pages/ArticlesPage.vue';
 import AboutPage from '@/pages/AboutPage.vue';
 import CreateArticle from '@/pages/CreateArticle.vue';
+import CurrentArticlePage from '@/pages/CurrentArticlePage.vue';
 
 const routes: RouteRecordRaw[] = [
   {
@@ -22,7 +23,7 @@ const routes: RouteRecordRaw[] = [
   {
     path: '/articles/:id',
     name: 'article',
-    component: ArticlesPage
+    component: CurrentArticlePage
   },
   {
     path: '/about',

@@ -21,15 +21,16 @@ Route::prefix('user')->middleware(['auth:sanctum'])->controller(UserController::
     Route::get('/logout', 'logout');
 });
 
+Route::get('category/get/{id}', [CategoryController::class, 'get']);
 Route::prefix('category')->middleware(['auth:sanctum'])->controller(CategoryController::class)->group(function () {
     Route::post('/create', 'create');
-    Route::get('/get/{id}', 'get');
     Route::delete('/delete/{id}', 'delete');
 });
 
-Route::prefix('post')->controller(PostController::class)->group(function () {
+Route::get('post/get/{id}', [PostController::class, 'get']);
+Route::prefix('post')->middleware(['auth:sanctum'])->controller(PostController::class)->group(function () {
     Route::post('/create', 'create');
-    Route::get('/get/{id}', 'get');
     Route::put('/update/{id}', 'update');
+    Route::get('/my', 'my');
     Route::delete('/delete/{id}', 'delete');
 });

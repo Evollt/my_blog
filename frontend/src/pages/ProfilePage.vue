@@ -2,12 +2,33 @@
 import PageTitle from "@/components/PageTitle.vue";
 import DescriptionAdd from "@/components/Description/Add/index.vue";
 import { useAuthStore } from "@/stores/auth";
-import { marked } from "marked";
 import { ref } from "vue";
-const authStore = useAuthStore();
-const addDescription = ref(false);
+import ArticlesList from "@/components/Articles/List.vue";
 import MarkdownPreview from "@uivjs/vue-markdown-preview";
 import "@uivjs/vue-markdown-preview/markdown.css";
+import { Ref } from "vue";
+import { IArticle } from "@/types/IArticle";
+import { onMounted } from "vue";
+import axios from "@/axios";
+const authStore = useAuthStore();
+const addDescription = ref(false);
+const myArticles: Ref<IArticle[]> = ref([]);
+
+const getMyArticles = async () => {
+  await axios
+    .get("api/post/my", {
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("auth_token"),
+      },
+    })
+    .then((resposne) => {
+      myArticles.value = resposne.data.data;
+    });
+};
+
+onMounted(async () => {
+  await getMyArticles();
+});
 </script>
 
 <template>
@@ -40,6 +61,14 @@ import "@uivjs/vue-markdown-preview/markdown.css";
       <DescriptionAdd
         :dialog="addDescription"
         @update-dialog="(e: boolean) => (addDescription = e)"
+      />
+
+      <PageTitle> Мои посты </PageTitle>
+
+      <ArticlesList
+        @get-articles="async () => await getMyArticles()"
+        :is-owner="true"
+        :articles="myArticles"
       />
     </div>
   </div>

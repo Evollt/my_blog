@@ -7,6 +7,7 @@ use App\Http\Resources\PostResource;
 use App\Models\Post;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller
 {
@@ -16,7 +17,7 @@ class PostController extends Controller
             'title' => $request->title,
             'description' => $request->description,
             'category_id' => $request->category_id,
-            'user_id' => auth()->user()->id
+            'user_id' => Auth::user()->id
         ]);
 
         return new PostResource($post);
@@ -26,13 +27,19 @@ class PostController extends Controller
     {
         switch ($id) {
             case 'all':
-                $posts = Post::all();
+                $posts = Post::all()->reverse();
                 return PostResource::collection($posts);
             default:
                 $post = Post::find($id);
                 return new PostResource($post);
         }
+    }
 
+    public function my()
+    {
+        $user = Auth::user();
+
+        return PostResource::collection($user->posts);
     }
 
 
@@ -57,5 +64,4 @@ class PostController extends Controller
             'message' => 'Пост удален'
         ]);
     }
-
 }

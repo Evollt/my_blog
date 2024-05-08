@@ -9,7 +9,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div>
+  <div class="pb-[100px]">
     <Header />
     <div class="container mx-auto">
       <RouterView></RouterView>

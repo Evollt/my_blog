@@ -7,10 +7,12 @@ import Register from "@/components/Register/index.vue";
 import { ref } from "vue";
 import { useAuthStore } from "@/stores/auth";
 import { User } from "@/composables/useUser";
+import PostEdit from "@/components/Post/Edit/index.vue";
 
 const loginDialog = ref(false);
 const registerDialog = ref(false);
 const authStore = useAuthStore();
+const createPostDialog = ref(false);
 </script>
 
 <template>
@@ -28,9 +30,6 @@ const authStore = useAuthStore();
         <ul class="flex justify-center gap-6">
           <li>
             <HeaderLink link="/articles" title="Посты" />
-          </li>
-          <li v-if="authStore.user">
-            <HeaderLink link="/create-article" title="Создать пост" />
           </li>
           <li>
             <HeaderLink link="/about" title="О нас" />
@@ -52,6 +51,9 @@ const authStore = useAuthStore();
                   <v-list-item-title>Профиль</v-list-item-title>
                 </v-list-item>
               </RouterLink>
+              <v-list-item @click="createPostDialog = true">
+                <v-list-item-title>Создать пост</v-list-item-title>
+              </v-list-item>
               <v-list-item @click="User.logout">
                 <v-list-item-title>Выйти</v-list-item-title>
               </v-list-item>
@@ -71,6 +73,10 @@ const authStore = useAuthStore();
   <Register
     :dialog="registerDialog"
     @update-dialog="(e) => (registerDialog = e)"
+  />
+  <PostEdit
+    :dialog="createPostDialog"
+    @update-dialog="(e: boolean) => (createPostDialog = e)"
   />
 </template>
 

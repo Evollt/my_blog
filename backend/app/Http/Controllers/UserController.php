@@ -85,13 +85,19 @@ class UserController extends Controller
         ], 200);
     }
 
-    public function update(UserRequest $request)
+    public function update(Request $request)
     {
         $user = Auth::user();
 
-        $user->name = $request->name;
-        $user->email = $request->email;
-        $user->description = $request->description;
+        if ($request->name) {
+            $user->name = $request->name;
+        }
+        if ($request->email) {
+            $user->email = $request->email;
+        }
+        if ($request->description) {
+            $user->description = $request->description;
+        }
 
         $user->save();
 

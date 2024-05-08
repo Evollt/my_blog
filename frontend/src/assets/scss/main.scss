@@ -9,3 +9,11 @@ body {
   color: white;
   font-family: $baseFont;
 }
+
+.v-overlay.v-overlay--active.v-dialog {
+  backdrop-filter: blur(10px)
+}
+
+.v-overlay__scrim {
+  background-color: rgba(0, 0, 0, 0.5) !important;
+}

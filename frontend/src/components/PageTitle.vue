@@ -12,5 +12,6 @@
 .page-title {
   display: flex;
   justify-content: center;
+  margin-bottom: 30px;
 }
 </style>

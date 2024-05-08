@@ -12,11 +12,16 @@ const routes: RouteRecordRaw[] = [
   {
     path: '/profile',
     name: 'profile',
-    component: ProfilePage
+    component: ProfilePage,
   },
   {
     path: '/articles',
     name: 'articles',
+    component: ArticlesPage
+  },
+  {
+    path: '/articles/:id',
+    name: 'article',
     component: ArticlesPage
   },
   {
@@ -27,7 +32,7 @@ const routes: RouteRecordRaw[] = [
   {
     path: '/create-article',
     name: 'create-article',
-    component: CreateArticle
+    component: CreateArticle,
   }
 ]
 

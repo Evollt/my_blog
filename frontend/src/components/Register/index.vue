@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, watch } from "vue";
-import LoginContent from "@/components/Login/Content.vue";
+import RegisterContent from "@/components/Register/Content.vue";
 
 const props = defineProps<{
   dialog: boolean;
@@ -23,7 +23,7 @@ watch(dialog, (value) => {
 <template>
   <div>
     <v-dialog v-model="dialog" width="100%" max-width="400">
-      <LoginContent :dialog="dialog" @update-dialog="(e) => (dialog = e)" />
+      <RegisterContent :dialog="dialog" @update-dialog="(e) => (dialog = e)" />
     </v-dialog>
   </div>
 </template>

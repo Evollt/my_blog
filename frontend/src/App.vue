@@ -1,5 +1,11 @@
 <script setup lang="ts">
 import Header from "@/components/Header/index.vue";
+import { onMounted } from "vue";
+import { User } from "./composables/useUser";
+
+onMounted(() => {
+  User.get();
+});
 </script>
 
 <template>

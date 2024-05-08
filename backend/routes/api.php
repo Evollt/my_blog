@@ -27,7 +27,7 @@ Route::prefix('category')->middleware(['auth:sanctum'])->controller(CategoryCont
     Route::delete('/delete/{id}', 'delete');
 });
 
-Route::prefix('post')->middleware(['auth:sanctum'])->controller(PostController::class)->group(function () {
+Route::prefix('post')->controller(PostController::class)->group(function () {
     Route::post('/create', 'create');
     Route::get('/get/{id}', 'get');
     Route::put('/update/{id}', 'update');

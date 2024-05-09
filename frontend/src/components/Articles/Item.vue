@@ -2,13 +2,14 @@
 import { IArticle } from "@/types/IArticle";
 import { ref } from "vue";
 import PostEdit from "@/components/Post/Edit/index.vue";
-import axios from "@/axios";
-import { toast } from "vue3-toastify";
-const props = defineProps<{
+import { Article } from "@/composables/useArticle";
+
+import { marked } from "marked";
+
+defineProps<{
   article: IArticle;
   isOwner: boolean;
 }>();
-const emits = defineEmits(["get-articles"]);
 
 let options = {
   month: "long",
@@ -18,19 +19,6 @@ let options = {
   minute: "numeric",
 };
 const editPostDialog = ref(false);
-
-const deleteArticle = async () => {
-  await axios
-    .delete(`api/post/delete/${props.article.id}`, {
-      headers: {
-        Authorization: "Bearer " + localStorage.getItem("auth_token"),
-      },
-    })
-    .then(() => {
-      emits("get-articles", true);
-      toast.info("Пост удален");
-    });
-};
 </script>
 
 <template>
@@ -49,7 +37,7 @@ const deleteArticle = async () => {
         {{ article.title }}
       </div>
       <div class="article-item__desc text-gray-500">
-        {{ article.description.slice(0, 200) + "..." }}
+        <div v-html="marked(article.description.slice(0, 200) + '...')"></div>
       </div>
       <div class="article-item__user text-gray-500">
         Автор: {{ article.user.name }}
@@ -68,7 +56,10 @@ const deleteArticle = async () => {
           @click="editPostDialog = true"
           >Редактировать</v-btn
         >
-        <v-btn variant="outlined" color="red" @click="deleteArticle"
+        <v-btn
+          variant="outlined"
+          color="red"
+          @click="Article.delete(article.id)"
           >Удалить</v-btn
         >
       </div>

@@ -6,28 +6,16 @@ import { ref } from "vue";
 import ArticlesList from "@/components/Articles/List.vue";
 import MarkdownPreview from "@uivjs/vue-markdown-preview";
 import "@uivjs/vue-markdown-preview/markdown.css";
-import { Ref } from "vue";
-import { IArticle } from "@/types/IArticle";
 import { onMounted } from "vue";
-import axios from "@/axios";
+import { Article } from "@/composables/useArticle";
+import { useArticleStore } from "@/stores/article";
+
 const authStore = useAuthStore();
 const addDescription = ref(false);
-const myArticles: Ref<IArticle[]> = ref([]);
-
-const getMyArticles = async () => {
-  await axios
-    .get("api/post/my", {
-      headers: {
-        Authorization: "Bearer " + localStorage.getItem("auth_token"),
-      },
-    })
-    .then((resposne) => {
-      myArticles.value = resposne.data.data;
-    });
-};
+const articleStore = useArticleStore();
 
 onMounted(async () => {
-  await getMyArticles();
+  await Article.my();
 });
 </script>
 
@@ -65,21 +53,9 @@ onMounted(async () => {
 
       <PageTitle> Мои посты </PageTitle>
 
-      <ArticlesList
-        @get-articles="async () => await getMyArticles()"
-        :is-owner="true"
-        :articles="myArticles"
-      />
+      <ArticlesList :is-owner="true" :articles="articleStore.myArticles" />
     </div>
   </div>
 </template>
 
-<style scoped lang="scss">
-.markdown-wrapper {
-  width: 100%;
-  max-width: 100%;
-  margin: 0;
-  background-color: #18181b;
-  color: white;
-}
-</style>
+<style scoped lang="scss"></style>

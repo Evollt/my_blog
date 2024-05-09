@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import { Ref, ref, watch } from "vue";
-// import { User } from "@/composables/useUser";
 import { useAuthStore } from "@/stores/auth";
 import { toast } from "vue3-toastify";
 import { IArticle } from "@/types/IArticle";
 import axios from "@/axios";
 import { onMounted } from "vue";
 import { ICategory } from "@/types/ICategory";
+import { Article } from "@/composables/useArticle";
 const props = defineProps<{
   dialog: boolean;
   article?: IArticle | null;
@@ -40,64 +40,13 @@ onMounted(async () => {
 });
 
 const editPost = async () => {
-  await axios
-    .post(
-      `api/post/update/${article.value.id}`,
-      {
-        _method: "put",
-        title: article.value.title,
-        description: article.value.description,
-        category_id: article.value.category.id,
-      },
-      {
-        headers: {
-          Authorization: "Bearer " + localStorage.getItem("auth_token"),
-        },
-      }
-    )
-    .then(() => {
-      toast.success("Пост успешно отредактирован");
-      emits("update-dialog", false);
-    })
-    .catch((response) => {
-      // @ts-ignore
-      for (const [key, value] of Object.entries(
-        response.response.data.errors
-      )) {
-        // @ts-ignore
-        toast.error(value[0]);
-      }
-    });
+  await Article.edit(article.value);
+  emits("update-dialog", false);
 };
 
 const createPost = async () => {
-  await axios
-    .post(
-      `api/post/create`,
-      {
-        title: article.value.title,
-        description: article.value.description,
-        category_id: article.value.category.id,
-      },
-      {
-        headers: {
-          Authorization: "Bearer " + localStorage.getItem("auth_token"),
-        },
-      }
-    )
-    .then(() => {
-      toast.success("Пост успешно создан");
-      emits("update-dialog", false);
-    })
-    .catch((response) => {
-      // @ts-ignore
-      for (const [key, value] of Object.entries(
-        response.response.data.errors
-      )) {
-        // @ts-ignore
-        toast.error(value[0]);
-      }
-    });
+  await Article.create(article.value);
+  emits("update-dialog", false);
 };
 </script>
 

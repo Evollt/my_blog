@@ -1,23 +1,21 @@
 <script setup lang="ts">
 import PageTitle from "@/components/PageTitle.vue";
-import { onMounted, Ref, ref } from "vue";
-import axios from "@/axios.ts";
-import { IArticle } from "@/types/IArticle.ts";
+import { onMounted } from "vue";
 import ArticlesList from "@/components/Articles/List.vue";
+import { Article } from "@/composables/useArticle";
+import { useArticleStore } from "@/stores/article";
 
-const articles: Ref<IArticle[]> = ref([]);
+const articleStore = useArticleStore();
 
 onMounted(() => {
-  axios.get("/api/post/get/all").then((response) => {
-    articles.value = response.data.data;
-  });
+  Article.getAll();
 });
 </script>
 
 <template>
   <div>
     <PageTitle>Посты</PageTitle>
-    <ArticlesList :articles="articles" />
+    <ArticlesList :articles="articleStore.articles" />
   </div>
 </template>
 

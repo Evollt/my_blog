@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import axios from "@/axios";
 import PageTitle from "@/components/PageTitle.vue";
 import { useAuthStore } from "@/stores/auth";
 import { IArticle } from "@/types/IArticle";
@@ -10,6 +9,7 @@ import PostEdit from "@/components/Post/Edit/index.vue";
 
 import MarkdownPreview from "@uivjs/vue-markdown-preview";
 import "@uivjs/vue-markdown-preview/markdown.css";
+import { Article } from "@/composables/useArticle";
 
 const article: Ref<IArticle | null> = ref(null);
 const route = useRoute();
@@ -23,7 +23,7 @@ let options = {
   minute: "numeric",
 };
 onMounted(async () => {
-  axios.get(`/api/post/get/${route.params.id}`).then((response) => {
+  await Article.get(Number(route.params.id)).then((response) => {
     article.value = response.data.data;
   });
 });

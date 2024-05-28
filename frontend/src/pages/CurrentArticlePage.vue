@@ -66,11 +66,4 @@ onMounted(async () => {
 </template>
 
 <style scoped lang="scss">
-.markdown-wrapper {
-  width: 100%;
-  max-width: 100%;
-  margin: 0;
-  background-color: #18181b;
-  color: white;
-}
 </style>

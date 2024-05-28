@@ -25,6 +25,21 @@ onMounted(async () => {
       {{ authStore.user?.name }}
     </PageTitle>
 
+    <div class="flex justify-center mb-4">
+      <img
+        v-if="authStore.user?.avatar"
+        :src="authStore.user?.avatar"
+        class="rounded-full w-36 h-36 object-cover"
+        alt=""
+      />
+      <img
+        v-else
+        src="@/assets/img/hacker.png"
+        class="rounded-full w-36 h-36 object-cover"
+        alt=""
+      />
+    </div>
+
     <div class="user-description grid gap-5">
       <div>
         <markdown-preview
@@ -40,10 +55,9 @@ onMounted(async () => {
 
       <div
         class="text-violet-500 cursor-pointer"
-        v-if="!addDescription"
         @click="addDescription = true"
       >
-        Добавить описание
+        Изменить данные
       </div>
 
       <DescriptionAdd

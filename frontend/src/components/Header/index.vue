@@ -42,15 +42,24 @@ const createPostDialog = ref(false);
           <v-menu transition="slide-y-transition">
             <template v-slot:activator="{ props }">
               <div v-bind="props" class="cursor-pointer">
-                {{ authStore.user.name }}
+                <img
+                  v-if="authStore.user.avatar"
+                  :src="authStore.user.avatar"
+                  class="rounded-full w-16 h-16 object-cover"
+                  alt=""
+                />
+                <img
+                  v-else
+                  src="@/assets/img/hacker.png"
+                  class="rounded-full w-14 h-14 object-cover"
+                  alt=""
+                />
               </div>
             </template>
             <v-list>
-              <RouterLink :to="{ name: 'profile' }">
-                <v-list-item>
-                  <v-list-item-title>Профиль</v-list-item-title>
-                </v-list-item>
-              </RouterLink>
+              <v-list-item @click="$router.push({ name: 'profile' })">
+                <v-list-item-title>Профиль</v-list-item-title>
+              </v-list-item>
               <v-list-item @click="createPostDialog = true">
                 <v-list-item-title>Создать пост</v-list-item-title>
               </v-list-item>

@@ -4,13 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\UserRequest;
 use App\Models\User;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use Log;
 
 class UserController extends Controller
 {
-    public function register(Request $request)
+    public function register(Request $request): JsonResponse
     {
         // валидация
         $validateUser = Validator::make($request->all(), [
@@ -41,7 +43,7 @@ class UserController extends Controller
         ], 200);
     }
 
-    public function login(Request $request)
+    public function login(Request $request): JsonResponse
     {
         // валидация
         $validateUser = Validator::make($request->all(), [
@@ -74,7 +76,7 @@ class UserController extends Controller
         ], 200);
     }
 
-    public function get()
+    public function get(): JsonResponse
     {
         $user = Auth::user();
 
@@ -89,13 +91,22 @@ class UserController extends Controller
     {
         $user = Auth::user();
 
-        if ($request->name) {
+
+        if ($request->exists('name')) {
             $user->name = $request->name;
         }
-        if ($request->email) {
+        if ($request->hasFile('avatar')) {
+            $file = $request->file('avatar');
+            if ($file->isValid()) {
+                $path = $file->store($user->id, 'public');
+                $user->avatar = \Storage::disk('public')->url($path);
+            }
+        }
+
+        if ($request->exists('email')) {
             $user->email = $request->email;
         }
-        if ($request->description) {
+        if ($request->exists('description')) {
             $user->description = $request->description;
         }
 
@@ -108,7 +119,7 @@ class UserController extends Controller
         ], 200);
     }
 
-    public function logout()
+    public function logout(): JsonResponse
     {
         Auth::user()->tokens()->delete();
 

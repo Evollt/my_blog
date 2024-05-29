@@ -18,6 +18,7 @@ const user: Ref<IUser> = ref({
   description: authStore.user?.description ?? "",
   avatar: authStore.user?.avatar ?? "",
 });
+const avatarPreview = ref(authStore.user?.avatar ?? "");
 
 const saveDescription = async () => {
   const response = await User.update(user.value);
@@ -29,9 +30,8 @@ const saveDescription = async () => {
 };
 
 const updatePhoto = (e: any) => {
-  // selectedFile.value = URL.createObjectURL(e.target.files[0]);
+  avatarPreview.value = URL.createObjectURL(e.target.files[0]);
   user.value.avatar = e.target.files[0];
-  console.log(user.value.avatar);
 };
 </script>
 
@@ -42,8 +42,8 @@ const updatePhoto = (e: any) => {
       <label class="flex justify-center mb-4">
         <div class="avatar flex">
           <img
-            v-if="user?.avatar"
-            :src="user?.avatar"
+            v-if="avatarPreview"
+            :src="avatarPreview"
             class="rounded-full w-36 h-36 object-cover"
             alt=""
           />

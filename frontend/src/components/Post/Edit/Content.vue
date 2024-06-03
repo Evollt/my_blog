@@ -23,7 +23,7 @@ const article: Ref<IArticle> = ref(
     user: authStore.user,
     category: "",
     created_at: "",
-  }
+  },
 );
 const categories: Ref<ICategory[]> = ref([]);
 const selectedCategory = ref(article.value.category.title);

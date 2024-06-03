@@ -9,3 +9,4 @@ export interface IArticle {
   category: ICategory;
   created_at: string;
 }
+

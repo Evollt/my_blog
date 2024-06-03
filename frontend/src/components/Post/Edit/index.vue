@@ -15,7 +15,7 @@ watch(
   () => props.dialog,
   (value) => {
     dialog.value = value;
-  }
+  },
 );
 watch(dialog, (value) => {
   emits("update-dialog", value);

@@ -4,16 +4,16 @@ import { IArticle } from "@/types/IArticle";
 import { toast } from "vue3-toastify";
 
 export class Article {
-  static articleStore = () => useArticleStore()
+  static articleStore = () => useArticleStore();
 
   static async getAll() {
-    return await axios.get("/api/post/get/all").then(response => {
-      this.articleStore().articles = response.data.data
-    })
+    return await axios.get("/api/post/get/all").then((response) => {
+      this.articleStore().articles = response.data.data;
+    });
   }
 
   static async get(id: number) {
-    return await axios.get(`/api/post/get/${id}`)
+    return await axios.get(`/api/post/get/${id}`);
   }
 
   static async create(article: IArticle) {
@@ -29,18 +29,18 @@ export class Article {
           headers: {
             Authorization: "Bearer " + localStorage.getItem("auth_token"),
           },
-        }
+        },
       )
       .then(() => {
         toast.success("Пост успешно создан");
 
-        this.getAll()
-        this.my()
+        this.getAll();
+        this.my();
       })
       .catch((response) => {
         // @ts-ignore
         for (const [key, value] of Object.entries(
-          response.response.data.errors
+          response.response.data.errors,
         )) {
           // @ts-ignore
           toast.error(value[0]);
@@ -62,18 +62,18 @@ export class Article {
           headers: {
             Authorization: "Bearer " + localStorage.getItem("auth_token"),
           },
-        }
+        },
       )
       .then(() => {
         toast.success("Пост успешно отредактирован");
 
-        this.getAll()
-        this.my()
+        this.getAll();
+        this.my();
       })
       .catch((response) => {
         // @ts-ignore
         for (const [key, value] of Object.entries(
-          response.response.data.errors
+          response.response.data.errors,
         )) {
           // @ts-ignore
           toast.error(value[0]);
@@ -103,8 +103,8 @@ export class Article {
       .then(() => {
         toast.info("Пост удален");
 
-        this.getAll()
-        this.my()
+        this.getAll();
+        this.my();
       });
   }
 }

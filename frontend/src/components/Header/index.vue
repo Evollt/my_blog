@@ -8,11 +8,25 @@ import { ref } from "vue";
 import { useAuthStore } from "@/stores/auth";
 import { User } from "@/composables/useUser";
 import PostEdit from "@/components/Post/Edit/index.vue";
+import { TresCanvas } from "@tresjs/core";
+import { OrbitControls } from "@tresjs/cientos";
+import Text from "../Models/Text.vue";
+import { BasicShadowMap, SRGBColorSpace, NoToneMapping } from "three";
 
 const loginDialog = ref(false);
 const registerDialog = ref(false);
 const authStore = useAuthStore();
 const createPostDialog = ref(false);
+
+const gl = {
+  clearColor: "#18181b",
+  shadows: true,
+  size: 300,
+  alpha: false,
+  shadowMapType: BasicShadowMap,
+  outputColorSpace: SRGBColorSpace,
+  toneMapping: NoToneMapping,
+};
 </script>
 
 <template>
